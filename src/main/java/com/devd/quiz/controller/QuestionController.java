@@ -42,7 +42,7 @@ public class QuestionController {
     @GetMapping("difficulty/{difficulty}")
     public ResponseEntity<List<Question>> getQuestionByDifficulty(@PathVariable String difficulty){
         try {
-            return new ResponseEntity<>(questionService.getQuestionByDifficulty(difficulty), HttpStatus.OK)
+            return new ResponseEntity<>(questionService.getQuestionByDifficulty(difficulty), HttpStatus.OK);
 
         }
         catch (Exception e){
@@ -53,7 +53,35 @@ public class QuestionController {
 
     @PostMapping("/")
     public ResponseEntity<String> addQuestion(@RequestBody Question question){
-        return  new ResponseEntity<>(questionService.addQuestion(question), HttpStatus.CREATED);
+        try {
+            return  new ResponseEntity<>(questionService.addQuestion(question), HttpStatus.CREATED);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @PutMapping("/")
+    public ResponseEntity<String> updateQuestion(@RequestBody Question question){
+        try {
+            return  new ResponseEntity<>(questionService.updateQuestion(question), HttpStatus.ACCEPTED);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteQuestion(@PathVariable Integer id){
+        try {
+            return new ResponseEntity<>(questionService.deleteQuestion(id), HttpStatus.OK);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
 }
